@@ -1,0 +1,4 @@
+---
+- hosts: hosts-inventory
+  roles:
+    - developer-env
