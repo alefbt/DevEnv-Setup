@@ -1,8 +1,15 @@
 ---
-- name: Get config for VyOS devices
-  vyos.vyos.vyos_facts:
-    gather_subset: all
-
-- name: Display the config
-  debug:
-    msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+- name: Install a list of packages
+  apt:
+    pkg:
+    - neovim 
+    - neovim-qt
+    - aria2
+    - fzf
+    - python3
+    - python3-setuptools
+    - python3-pip
+    - firmware-iwlwifi
+    - rsync
+    - helm
+    - snapd               # might require updates
