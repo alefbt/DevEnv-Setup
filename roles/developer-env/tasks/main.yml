@@ -32,7 +32,7 @@
 # veracrypt
 #
 # - helm
-#- snapd               # might require updates
+# - snapd               # might require updates
 
 #should have
 # ansible-playbook  --ask-become-pass site.yml
@@ -43,6 +43,6 @@
 # vim
 # nix
 # snap
-# fzf
-# ranger
 # kitty
+
+# rm ~/.cache/tracker ; rm ~/.local/share/tracker

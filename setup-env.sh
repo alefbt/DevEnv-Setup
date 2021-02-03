@@ -1,11 +1,5 @@
 #!/bin/sh
 
-
-# wget exists out-of-the-box
-# wget -O - https://raw.githubusercontent.com/alefbt/DevEnv-Setup/main/setup-env.sh | bash
-# sh <(curl -L https://raw.githubusercontent.com/alefbt/DevEnv-Setup/main/setup-env.sh)
-
-
 GIT_FROM_URL="https://github.com/alefbt/DevEnv-Setup.git"
 GIT_BRANCH="main"
 
@@ -21,6 +15,10 @@ STATUS_ERROR="$C_FALSE"
 
 TMP_APT_SOURCE_LIST="/tmp/new-source-list.$timestamp"
 TMP_ENV_PATH="$HOME/tmp/_create-env.$timestamp"
+
+#
+# Functions
+#
 log(){
     echo " * $1"
 }
@@ -119,14 +117,14 @@ if [ "$P_update_apt" -eq "$C_TRUE" ] ; then
 #
 # $COMMENT_STAMP
 #
-deb http://deb.debian.org/debian $VERSION_CODENAME main contrib non-free
-deb-src http://deb.debian.org/debian $VERSION_CODENAME main contrib non-free
+deb http://deb.debian.org/debian $UPGRADE_CODENAME main contrib non-free
+deb-src http://deb.debian.org/debian $UPGRADE_CODENAME main contrib non-free
 
-deb http://deb.debian.org/debian-security/ $VERSION_CODENAME/updates main contrib non-free
-deb-src http://deb.debian.org/debian-security/ $VERSION_CODENAME/updates main contrib non-free
+deb http://deb.debian.org/debian-security/ $UPGRADE_CODENAME/updates main contrib non-free
+deb-src http://deb.debian.org/debian-security/ $UPGRADE_CODENAME/updates main contrib non-free
 
-deb http://deb.debian.org/debian $VERSION_CODENAME-updates main contrib non-free
-deb-src http://deb.debian.org/debian $VERSION_CODENAME-updates main contrib non-free
+deb http://deb.debian.org/debian $UPGRADE_CODENAME-updates main contrib non-free
+deb-src http://deb.debian.org/debian $UPGRADE_CODENAME-updates main contrib non-free
 EOT
 
 	sudo mv $TMP_APT_SOURCE_LIST /etc/apt/sources.list
@@ -209,6 +207,3 @@ rm -rf "$TMP_ENV_PATH"
 rm "$TMP_APT_SOURCE_LIST"
 
 echo "DONE"
-
-exit 0
-
