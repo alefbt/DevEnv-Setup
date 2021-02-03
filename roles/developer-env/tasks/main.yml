@@ -11,5 +11,38 @@
     - python3-pip
     - firmware-iwlwifi
     - rsync
-    - helm
-    - snapd               # might require updates
+    - zsh
+    - zsh-autosuggestions
+    - zsh-syntax-highlighting
+    - ranger
+    - libpango1.0-0
+    - libpangox-1.0-0
+    - python3-gpg
+    - keepassxc
+    - httpie
+    - aptitude
+
+
+# create projects dir
+#fonts
+# dropbox - 
+#   |-> DEPS: libpango1.0-0 libpangox-1.0-0 python3-gpg
+#   |-> cmd: dropbox start -i
+#   |-> cmd: dropbox autostart y
+# veracrypt
+#
+# - helm
+#- snapd               # might require updates
+
+#should have
+# ansible-playbook  --ask-become-pass site.yml
+#
+#
+# Todo:
+# Dropbox
+# vim
+# nix
+# snap
+# fzf
+# ranger
+# kitty
