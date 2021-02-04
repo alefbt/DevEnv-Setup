@@ -186,8 +186,11 @@ fi
 #
 # Create basic workspace
 #
-mkdir -p {$C_USER_HOME/Projects,$C_USER_HOME/tmp,$C_USER_HOME/Applications,$C_USER_HOME/Data} > /dev/null 2>&1 
-mkdir -p $C_USER_HOME/.config/autostart > /dev/null 2>&1 
+mkdir -p $C_USER_HOME/Projects			 > /dev/null 2>&1 
+mkdir -p $C_USER_HOME/tmp			 > /dev/null 2>&1 
+mkdir -p $C_USER_HOME/Applications		 > /dev/null 2>&1 
+mkdir -p $C_USER_HOME/Data 			> /dev/null 2>&1 
+mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
 
 USER_LOG_DIR="/var/log/users/$C_USERNAME/"
 sudo mkdir -p "$USER_LOG_DIR"
