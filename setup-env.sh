@@ -258,6 +258,14 @@ if [ ! -f "/usr/bin/zoom" ] ; then
 fi
 
 
+if [ ! -d "/nix" ] ; then
+  sudo mkdir /nix
+  sudo chown $C_USERNAME /nix
+  wget "https://nixos.org/nix/install" -O ./nix-install.sh
+  sh ./nix-install.sh --no-daemon
+  rm ./nix-install.sh
+  # add . /home/yehuda/.nix-profile/etc/profile.d/nix.sh
+fi
 
 git clone --branch "$GIT_BRANCH" "$GIT_FROM_URL" "from-git"
 cd "$TMP_ENV_PATH/from-git"

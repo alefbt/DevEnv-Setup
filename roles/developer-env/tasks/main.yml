@@ -4,45 +4,63 @@
     pkg:
     - neovim 
     - neovim-qt
-    - aria2
     - fzf
     - python3
     - python3-setuptools
     - python3-pip
-    - firmware-iwlwifi
-    - rsync
     - zsh
     - zsh-autosuggestions
     - zsh-syntax-highlighting
-    - ranger
     - libpango1.0-0
     - libpangox-1.0-0
     - python3-gpg
-    - keepassxc
     - httpie
     - aptitude
+    - snapd
+    - apt-transport-https
+    
+- name: Install via snap
+  snap:
+    name: code
+    classic: yes
 
+- name: Install via snap
+  snap:
+    name: microk8s
+    classic: yes
 
-# create projects dir
-#fonts
-# dropbox - 
-#   |-> DEPS: libpango1.0-0 libpangox-1.0-0 python3-gpg
-#   |-> cmd: dropbox start -i
-#   |-> cmd: dropbox autostart y
+- name: Adding user {{ lookup('env', 'USER') }} to groups
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    shell: /bin/zsh
+    groups: microk8s
+    append: yes   
+    
+- name: HELM - Add an Apt signing key for
+  ansible.builtin.apt_key:
+    url: https://baltocdn.com/helm/signing.asc
+    state: present
+    
+- name: HELM - Add specified repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb https://baltocdn.com/helm/stable/debian/ all main
+    state: present    
+    
+- name: HELM - Update repositories cache and install "helm" package
+  apt:
+    name: helm
+    update_cache: yes
+
+     
+#    sudo usermod -a -G microk8s yehuda
+#    sudo chown -f -R yehuda ~/.kube
+
 # veracrypt
-#
-# - helm
-# - snapd               # might require updates
 
 #should have
 # ansible-playbook  --ask-become-pass site.yml
 #
 #
 # Todo:
-# Dropbox
-# vim
 # nix
-# snap
-# kitty
 
-# rm ~/.cache/tracker ; rm ~/.local/share/tracker

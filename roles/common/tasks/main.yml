@@ -1,1 +1,13 @@
 ---
+- name: Install a list of packages
+  apt:
+    pkg:
+    - ttf-mscorefonts-installer
+    - aria2
+    - firmware-iwlwifi
+    - rsync
+    - ranger
+    - keepassxc
+    - kitty
+    - vlc
+
