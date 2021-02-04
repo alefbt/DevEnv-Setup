@@ -4,6 +4,7 @@ GIT_FROM_URL="https://github.com/alefbt/DevEnv-Setup.git"
 GIT_BRANCH="main"
 
 C_USERNAME=$(whoami)
+C_USER_HOME="$HOME" #$(eval echo "~")
 timestamp=$(date +%s)
 C_ts=$(date +"%Y-%m-%d_%H-%M-%S")
 
@@ -15,6 +16,7 @@ STATUS_ERROR="$C_FALSE"
 
 TMP_APT_SOURCE_LIST="/tmp/new-source-list.$timestamp"
 TMP_ENV_PATH="$HOME/tmp/_create-env.$timestamp"
+
 
 #
 # Functions
@@ -120,8 +122,8 @@ if [ "$P_update_apt" -eq "$C_TRUE" ] ; then
 deb http://deb.debian.org/debian $UPGRADE_CODENAME main contrib non-free
 deb-src http://deb.debian.org/debian $UPGRADE_CODENAME main contrib non-free
 
-deb http://deb.debian.org/debian-security/ $UPGRADE_CODENAME/updates main contrib non-free
-deb-src http://deb.debian.org/debian-security/ $UPGRADE_CODENAME/updates main contrib non-free
+deb http://security.debian.org/debian-security/ $UPGRADE_CODENAME-security main contrib non-free
+deb-src http://security.debian.org/debian-security/ $UPGRADE_CODENAME-security main contrib non-free
 
 deb http://deb.debian.org/debian $UPGRADE_CODENAME-updates main contrib non-free
 deb-src http://deb.debian.org/debian $UPGRADE_CODENAME-updates main contrib non-free
@@ -135,8 +137,7 @@ fi
 #
 # Install firmware to enable wifi
 #
-sudo apt install intel-microcode firmware-iwlwifi firmware-linux
-
+sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux
 
 
 ## Ask re-enable wifi mode
@@ -181,16 +182,84 @@ if [ "$P_git_conf" -eq "$C_TRUE" ] ; then
 	git config --global user.name  "$p_fullname"
 fi
 
-############ ANSIBLE ###########
+
+#
+# Create basic workspace
+#
+mkdir -p {$C_USER_HOME/Projects,$C_USER_HOME/tmp,$C_USER_HOME/Applications,$C_USER_HOME/Data} > /dev/null 2>&1 
+mkdir -p $C_USER_HOME/.config/autostart > /dev/null 2>&1 
+
+USER_LOG_DIR="/var/log/users/$C_USERNAME/"
+sudo mkdir -p "$USER_LOG_DIR"
+sudo chown -R $C_USERNAME "$USER_LOG_DIR"
+
+#
+# ssh generate key
+#
+if [ ! -f ~/.ssh/id_rsa ] ; then
+    log "Generate ssh default key"
+    ssh-keygen -b 4096 -q -f ~/.ssh/id_rsa -P ""
+else
+    log "SSH key file exists"
+fi
+
+
+
+
+#####################
 #
 # Create temp workspace
 #
+log "Create temp workspace"
 mkdir -p "$TMP_ENV_PATH"
 cd "$TMP_ENV_PATH"
+
+
+## Ask to install dropbox
+if [ ! -d "$C_USER_HOME/.dropbox-dist" ] ; then
+    promptYesNo "Install dropbox ?"
+    P_install_dropbox=$?
+    if [ "$P_install_dropbox" -eq "$C_TRUE" ] ; then
+	    wget -O dropbox.tar.gz "https://www.dropbox.com/download?plat=lnx.x86_64" 
+	    tar xzf dropbox.tar.gz
+	    mv .dropbox-dist "$C_USER_HOME"
+    fi
+    AUTOSTART_DROPBOX="$C_USER_HOME/.config/autostart/dropbox.desktop"
+    if [ ! -f "$AUTOSTART_DROPBOX" ] ; then 
+        cat <<EOT > $AUTOSTART_DROPBOX
+[Desktop Entry]
+Type=Application
+Name=dropbox
+GenericName=Dropbox deamon
+Comment=Sync my files dropbox way to cloud
+Icon=utilities-terminal
+Exec=$C_USER_HOME/.dropbox-dist/dropboxd > $USER_LOG_DIR/dropbox.log 2>&1
+Categories=ConsoleOnly;System
+Terminal=false
+X-GNOME-Autostart-enabled=true
+EOT
+	chmod +x $AUTOSTART_DROPBOX
+	sudo chmod +x $AUTOSTART_DROPBOX
+    fi
+fi
+
+# Install zoom
+if [ ! -f "/usr/bin/zoom" ] ; then
+	promptYesNo "Install zoom ?"
+	P_install_zoom=$?
+	if [ "$P_install_zoom" -eq "$C_TRUE" ] ; then
+		wget "https://zoom.us/client/latest/zoom_amd64.deb" -O zoom_amd64.deb
+		sudo apt install libgl1-mesa-glx libegl1-mesa libxcb-xtest0 -y
+		sudo dpkg -i zoom_amd64.deb
+	fi
+fi
+
+
 
 git clone --branch "$GIT_BRANCH" "$GIT_FROM_URL" "from-git"
 cd "$TMP_ENV_PATH/from-git"
 
+# RUN ANSIBLE
 log "Might ask $C_USERNAME password"
 ansible-playbook  --ask-become-pass site.yml
 
@@ -204,6 +273,5 @@ ansible-playbook  --ask-become-pass site.yml
 # CLEAN UP
 #####
 rm -rf "$TMP_ENV_PATH"
-rm "$TMP_APT_SOURCE_LIST"
 
 echo "DONE"
