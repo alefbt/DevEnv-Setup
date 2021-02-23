@@ -267,6 +267,22 @@ if [ ! -d "/nix" ] ; then
   # add . /home/yehuda/.nix-profile/etc/profile.d/nix.sh
 fi
 
+
+if [ ! -f "$C_USER_HOME/.zshrc" ] ; then
+    sudo apt install zsh fonts-powerline
+    wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O zsh-omz-install.sh
+    sh zsh-omz-install.sh --unattended
+    rm zsh-omz-install.sh
+    git clone https://github.com/bhilburn/powerlevel9k.git "$C_USER_HOME/.oh-my-zsh/custom/themes/powerlevel9k"
+    #wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+    #wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+    #mkdir -p "$C_USER_HOME/.local/share/fonts/"
+    #mv PowerlineSymbols.otf "$C_USER_HOME/.local/share/fonts/"
+    #fc-cache -vf ~/.local/share/fonts/
+    #mv 10-powerline-symbols.conf "$C_USER_HOME/.config/fontconfig/conf.d/"
+
+fi
+
 git clone --branch "$GIT_BRANCH" "$GIT_FROM_URL" "from-git"
 cd "$TMP_ENV_PATH/from-git"
 
