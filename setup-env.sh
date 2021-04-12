@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 set -e
 
 GIT_FROM_URL="https://github.com/alefbt/DevEnv-Setup.git"
@@ -142,6 +141,10 @@ fi
 #
 sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux
 
+#
+# Install snapd
+#
+sudo apt -y install snapd
 
 ## Ask re-enable wifi mode
 promptYesNo "Enable wifi mod ?"
