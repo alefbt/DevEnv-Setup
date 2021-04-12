@@ -1,4 +1,3 @@
----
 - name: Install a list of packages
   apt:
     pkg:
@@ -20,7 +19,7 @@
     - apt-transport-https
     - docker 
     - docker-compose
-    
+
 - name: Install via snap
   snap:
     name: code
