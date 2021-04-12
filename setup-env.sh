@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+
+set -e
 
 GIT_FROM_URL="https://github.com/alefbt/DevEnv-Setup.git"
 GIT_BRANCH="main"
@@ -171,7 +174,7 @@ if [ "$P_git_conf" -eq "$C_TRUE" ] ; then
     log "git config --global user.email \"$p_email\""
 	log "git config --global user.name \"$p_fullname\""
 
-    promptYesNo "Enable wifi mod ?"
+    promptYesNo "Is git config correct ?"
     P_git_conf=$?
     if [ "$P_git_conf" -eq "$C_FALSE" ] ; then
         log "Aborting."
@@ -179,7 +182,7 @@ if [ "$P_git_conf" -eq "$C_TRUE" ] ; then
     fi
 
     git config --global user.email "$p_email"
-	git config --global user.name  "$p_fullname"
+    git config --global user.name  "$p_fullname"
 fi
 
 

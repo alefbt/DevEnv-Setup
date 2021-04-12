@@ -20,15 +20,16 @@
     - apt-transport-https
     - docker 
     - docker-compose
+    
 - name: Install via snap
   snap:
     name: code
     classic: yes
 
-- name: Install via snap
-  snap:
-    name: microk8s
-    classic: yes
+#- name: Install via snap
+#  snap:
+#    name: microk8s
+#    classic: yes
 
 - name: Adding user {{ lookup('env', 'USER') }} to groups
   user:
