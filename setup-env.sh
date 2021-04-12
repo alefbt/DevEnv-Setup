@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+#set -e
 
 GIT_FROM_URL="https://github.com/alefbt/DevEnv-Setup.git"
 GIT_BRANCH="main"
