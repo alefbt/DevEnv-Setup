@@ -20,10 +20,11 @@
     - docker 
     - docker-compose
 
-- name: Install via snap
-  snap:
-    name: code
-    classic: yes
+#- name: Install via snap
+#  snap:
+#    name: 
+#      - code
+#    classic: yes
 
 #- name: Install via snap
 #  snap:
