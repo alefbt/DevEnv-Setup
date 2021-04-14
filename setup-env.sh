@@ -139,12 +139,12 @@ fi
 #
 # Install firmware to enable wifi
 #
-sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux
+sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-linux-nonfree
 
 #
 # Install snapd
 #
-sudo apt -y install snapd
+# sudo apt -y install snapd
 
 ## Ask re-enable wifi mode
 promptYesNo "Enable wifi mod ?"
@@ -196,7 +196,7 @@ mkdir -p $C_USER_HOME/Projects			 > /dev/null 2>&1
 mkdir -p $C_USER_HOME/tmp			 > /dev/null 2>&1 
 mkdir -p $C_USER_HOME/Applications		 > /dev/null 2>&1 
 mkdir -p $C_USER_HOME/Data 			> /dev/null 2>&1 
-mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
+# mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
 
 USER_LOG_DIR="/var/log/users/$C_USERNAME/"
 sudo mkdir -p "$USER_LOG_DIR"
@@ -264,14 +264,14 @@ if [ ! -f "/usr/bin/zoom" ] ; then
 fi
 
 
-if [ ! -d "/nix" ] ; then
-  sudo mkdir /nix
-  sudo chown $C_USERNAME /nix
-  wget "https://nixos.org/nix/install" -O ./nix-install.sh
-  sh ./nix-install.sh --no-daemon
-  rm ./nix-install.sh
-  # add . /home/yehuda/.nix-profile/etc/profile.d/nix.sh
-fi
+#if [ ! -d "/nix" ] ; then
+#  sudo mkdir /nix
+#  sudo chown $C_USERNAME /nix
+#  wget "https://nixos.org/nix/install" -O ./nix-install.sh
+#  sh ./nix-install.sh --no-daemon
+#  rm ./nix-install.sh
+#  # add . /home/yehuda/.nix-profile/etc/profile.d/nix.sh
+#fi
 
 
 if [ ! -f "$C_USER_HOME/.zshrc" ] ; then
@@ -279,7 +279,8 @@ if [ ! -f "$C_USER_HOME/.zshrc" ] ; then
     wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O zsh-omz-install.sh
     sh zsh-omz-install.sh --unattended
     rm zsh-omz-install.sh
-    git clone https://github.com/bhilburn/powerlevel9k.git "$C_USER_HOME/.oh-my-zsh/custom/themes/powerlevel9k"
+    # DEPRICATED: git clone https://github.com/bhilburn/powerlevel9k.git "$C_USER_HOME/.oh-my-zsh/custom/themes/powerlevel9k"
+    #git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     #wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
     #wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
     #mkdir -p "$C_USER_HOME/.local/share/fonts/"
