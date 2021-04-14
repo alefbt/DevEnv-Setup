@@ -7,9 +7,6 @@
     - python3
     - python3-setuptools
     - python3-pip
-    - zsh
-    - zsh-autosuggestions
-    - zsh-syntax-highlighting
     - libpango1.0-0
     - libpangox-1.0-0
     - python3-gpg
@@ -20,23 +17,23 @@
     - docker 
     - docker-compose
 
-#- name: Install via snap
-#  snap:
-#    name: 
-#      - code
-#    classic: yes
+- name: Include ZSH tasks
+  import_tasks: zsh.yml
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
 
-#- name: Install via snap
-#  snap:
-#    name: microk8s
-#    classic: yes
+- name: Install via snap
+  snap:
+    name: 
+      - code
+    classic: yes
 
-- name: Adding user {{ lookup('env', 'USER') }} to groups
-  user:
-    name: "{{ lookup('env', 'USER') }}"
-    shell: /bin/zsh
-    groups: microk8s
-    append: yes   
+#- name: Adding user {{ lookup('env', 'USER') }} to groups
+#  user:
+#    name: "{{ lookup('env', 'USER') }}"
+#    shell: /bin/zsh
+#    groups: microk8s
+#    append: yes   
     
 - name: HELM - Add an Apt signing key for
   ansible.builtin.apt_key:

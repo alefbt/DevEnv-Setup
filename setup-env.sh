@@ -138,13 +138,11 @@ fi
 
 #
 # Install firmware to enable wifi
+#           snapd as package
 #
-sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-linux-nonfree firmware-realtek
+sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-linux-nonfree \
+                    firmware-realtek 
 
-#
-# Install snapd
-#
-# sudo apt -y install snapd
 
 ## Ask re-enable wifi mode
 promptYesNo "Enable wifi mod ?"
@@ -161,7 +159,7 @@ fi
 #
 # Apt update, upgrade, install essntials
 #
-sudo bash -c 'apt update -y && apt upgrade -y && apt dist-upgrade -y && apt install -y git curl ansible'
+sudo bash -c 'apt update -y && apt upgrade -y && apt dist-upgrade -y && apt install -y snapd git curl ansible'
 
 #
 # Configure git
@@ -276,10 +274,10 @@ fi
 
 
 if [ ! -f "$C_USER_HOME/.zshrc" ] ; then
-    sudo apt install zsh fonts-powerline
-    wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O zsh-omz-install.sh
-    sh zsh-omz-install.sh --unattended
-    rm zsh-omz-install.sh
+    #sudo apt install zsh fonts-powerline
+    #wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O zsh-omz-install.sh
+    #sh zsh-omz-install.sh --unattended
+    #rm zsh-omz-install.sh
     # DEPRICATED: git clone https://github.com/bhilburn/powerlevel9k.git "$C_USER_HOME/.oh-my-zsh/custom/themes/powerlevel9k"
     #git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
     #wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
@@ -310,3 +308,5 @@ ansible-playbook  --ask-become-pass site.yml
 rm -rf "$TMP_ENV_PATH"
 
 echo "DONE"
+#sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#wget 	sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"

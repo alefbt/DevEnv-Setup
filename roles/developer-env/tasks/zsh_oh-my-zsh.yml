@@ -1,0 +1,43 @@
+- name: Create ~/tmp folder
+  file:
+    path: "{{ lookup('env','HOME') }}/tmp"
+
+- name: check 
+  stat:
+    path: "{{ lookup('env','HOME') }}/.oh-my-zsh"
+  register: omz_folder
+
+- name: Install a list of packages
+  apt:
+    pkg:
+    - git
+    - fonts-powerline
+  when: not omz_folder.stat.exists
+
+- name: Download oh-my-zsh
+  when: not omz_folder.stat.exists
+  get_url:
+    force: true
+    url:   https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: "{{ lookup('env','HOME') }}/tmp/zsh-omz-install.sh"
+
+- name: Install OMZ
+  when: not omz_folder.stat.exists
+  ansible.builtin.shell:
+    cmd: "printf 'y' | CHSH=yes RUNZSH=no sh ./zsh-omz-install.sh"
+    chdir: "{{ lookup('env','HOME') }}/tmp"
+
+
+- name: check 
+  stat:
+    path: "{{ lookup('env','HOME') }}/.oh-my-zsh/custom/themes/powerlevel10k"
+  register: omz_powerlevel10k_folder
+
+- name: Install powerlevel10k
+  when: not omz_powerlevel10k_folder.stat.exists
+  git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: "{{ lookup('env','HOME') }}/.oh-my-zsh/custom/themes/powerlevel10k"
+    depth: 1
+
+

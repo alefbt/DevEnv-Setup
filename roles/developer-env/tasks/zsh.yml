@@ -1,0 +1,14 @@
+- name: Install a list of packages
+  apt:
+    pkg:
+    - zsh
+    - zsh-autosuggestions
+    - zsh-syntax-highlighting
+
+- name: Include oh-my-zsh
+  include_tasks: zsh_oh-my-zsh.yml
+
+- name: Write .zshrc
+  template:
+      src: h.zshrc.sh.j2
+      dest: "{{ lookup('env','HOME') }}/.zshrc"
