@@ -139,7 +139,7 @@ fi
 #
 # Install firmware to enable wifi
 #
-sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-linux-nonfree
+sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-linux-nonfree firmware-realtek
 
 #
 # Install snapd
