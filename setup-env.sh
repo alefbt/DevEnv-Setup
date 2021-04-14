@@ -196,7 +196,7 @@ mkdir -p $C_USER_HOME/Projects			 > /dev/null 2>&1
 mkdir -p $C_USER_HOME/tmp			 > /dev/null 2>&1 
 mkdir -p $C_USER_HOME/Applications		 > /dev/null 2>&1 
 mkdir -p $C_USER_HOME/Data 			> /dev/null 2>&1 
-# mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
+
 
 USER_LOG_DIR="/var/log/users/$C_USERNAME/"
 sudo mkdir -p "$USER_LOG_DIR"
@@ -233,6 +233,7 @@ if [ ! -d "$C_USER_HOME/.dropbox-dist" ] ; then
 	    tar xzf dropbox.tar.gz
 	    mv .dropbox-dist "$C_USER_HOME"
     fi
+    mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
     AUTOSTART_DROPBOX="$C_USER_HOME/.config/autostart/dropbox.desktop"
     if [ ! -f "$AUTOSTART_DROPBOX" ] ; then 
         cat <<EOT > $AUTOSTART_DROPBOX
