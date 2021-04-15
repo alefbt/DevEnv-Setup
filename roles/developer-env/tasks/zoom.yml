@@ -1,0 +1,22 @@
+- name: Install zoom required packages
+  apt:
+    pkg:
+    - libgl1-mesa-glx 
+    - libegl1-mesa 
+    - libxcb-xtest0
+
+- name: check if zoom package exists
+  command: dpkg-query -f '${binary:Package}\n' -W 'zoom' 
+  register: zoom_q_r
+  ignore_errors: true
+  changed_when: False
+
+- name: Install zoom
+  apt:
+    deb: https://zoom.us/client/latest/zoom_amd64.deb
+  register: zoom_r
+  when: zoom_q_r.rc != 0
+
+- command: apt install -f -y
+  when: zoom_r.changed
+

@@ -22,6 +22,9 @@
   become: yes
   become_user: "{{ lookup('env','USER') }}"
 
+- name: Zoom tasks
+  import_tasks: zoom.yml
+
 - name: Install via snap
   snap:
     name: 
