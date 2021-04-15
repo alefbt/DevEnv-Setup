@@ -4,6 +4,7 @@
     - neovim 
     - neovim-qt
     - python3-pynvim
+    - virtualenv
   become: yes
   become_user: root
 
@@ -21,6 +22,26 @@
   loop:
     - .local/share/nvim/site/autoload/
     - .config/nvim
+    - Data/python/v2.7
+
+- name: check venv-global
+  stat:
+    path: "{{ lookup('env','HOME') }}/Data/python/v2.7/venv-global"
+  register: venv_global_f_r
+
+- name: "Create venv-global"
+  command: virtualenv -p /usr/bin/python2.7 {{ lookup('env','HOME') }}/Data/python/v2.7/venv-global
+  when: not venv_global_f_r.stat.exists
+
+
+- name: check neovim venv-global
+  stat:
+    path: "{{ lookup('env','HOME') }}/Data/python/v2.7/venv-global/lib/python2.7/site-packages/neovim"
+  register: neovim_venv_global_f_r
+
+- name: install neovim package
+  command: "{{ lookup('env','HOME') }}/Data/python/v2.7/venv-global/bin/python -m pip install neovim"
+  when: not neovim_venv_global_f_r.stat.exists
 
 - name: Download oh-my-zsh
   get_url:
