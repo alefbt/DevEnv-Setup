@@ -1,0 +1,21 @@
+- name: Create ~/tmp folder
+  file:
+    path: "/var/log/users/{{ lookup('env','USER') }}"
+    owner: "{{ lookup('env','USER') }}"
+    recurse: true
+    mode: u+rw
+    state: directory
+
+- name: create Users workspace
+  file:
+    path: "{{ lookup('env','HOME') }}/{{ item }}"
+    owner: "{{ lookup('env','USER') }}"
+    group: "{{ lookup('env','USER') }}"
+    recurse: true
+    mode: u+rwx
+    state: directory    
+  loop:
+    - Projects
+    - tmp
+    - Applications/Archive
+    - Data

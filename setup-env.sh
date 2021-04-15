@@ -78,7 +78,6 @@ fi
 #
 require_command "sudo"
 
-
 #
 # SODO check
 #
@@ -145,7 +144,7 @@ sudo apt -y install intel-microcode firmware-iwlwifi firmware-linux firmware-lin
 
 
 ## Ask re-enable wifi mode
-promptYesNo "Enable wifi mod ?"
+promptYesNo "Enable wifi mod (rmmod iwlwifi && modprobe iwlwifi) ?"
 P_enable_wifi=$?
 if [ "$P_enable_wifi" -eq "$C_TRUE" ] ; then
     echo "Enabling wifi"
@@ -187,18 +186,6 @@ if [ "$P_git_conf" -eq "$C_TRUE" ] ; then
 fi
 
 
-#
-# Create basic workspace
-#
-mkdir -p $C_USER_HOME/Projects			 > /dev/null 2>&1 
-mkdir -p $C_USER_HOME/tmp			 > /dev/null 2>&1 
-mkdir -p $C_USER_HOME/Applications		 > /dev/null 2>&1 
-mkdir -p $C_USER_HOME/Data 			> /dev/null 2>&1 
-
-
-USER_LOG_DIR="/var/log/users/$C_USERNAME/"
-sudo mkdir -p "$USER_LOG_DIR"
-sudo chown -R $C_USERNAME "$USER_LOG_DIR"
 
 #
 # ssh generate key
@@ -212,7 +199,6 @@ fi
 
 
 
-
 #####################
 #
 # Create temp workspace
@@ -220,36 +206,6 @@ fi
 log "Create temp workspace"
 mkdir -p "$TMP_ENV_PATH"
 cd "$TMP_ENV_PATH"
-
-
-## Ask to install dropbox
-if [ ! -d "$C_USER_HOME/.dropbox-dist" ] ; then
-    promptYesNo "Install dropbox ?"
-    P_install_dropbox=$?
-    if [ "$P_install_dropbox" -eq "$C_TRUE" ] ; then
-	    wget -O dropbox.tar.gz "https://www.dropbox.com/download?plat=lnx.x86_64" 
-	    tar xzf dropbox.tar.gz
-	    mv .dropbox-dist "$C_USER_HOME"
-    fi
-    mkdir -p $C_USER_HOME/.config/autostart 	> /dev/null 2>&1 
-    AUTOSTART_DROPBOX="$C_USER_HOME/.config/autostart/dropbox.desktop"
-    if [ ! -f "$AUTOSTART_DROPBOX" ] ; then 
-        cat <<EOT > $AUTOSTART_DROPBOX
-[Desktop Entry]
-Type=Application
-Name=dropbox
-GenericName=Dropbox deamon
-Comment=Sync my files dropbox way to cloud
-Icon=utilities-terminal
-Exec=$C_USER_HOME/.dropbox-dist/dropboxd > $USER_LOG_DIR/dropbox.log 2>&1
-Categories=ConsoleOnly;System
-Terminal=false
-X-GNOME-Autostart-enabled=true
-EOT
-	chmod +x $AUTOSTART_DROPBOX
-	sudo chmod +x $AUTOSTART_DROPBOX
-    fi
-fi
 
 
 #if [ ! -d "/nix" ] ; then

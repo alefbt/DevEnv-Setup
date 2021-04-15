@@ -1,6 +1,0 @@
----
-
-devmachines:
-    hosts:
-        developers:
-            ansible_host: localhost

@@ -1,0 +1,33 @@
+- name: Create ~/tmp folder
+  file:
+    path: "{{ lookup('env','HOME') }}/tmp"
+    state: directory
+
+- name: check dropbox dist existence
+  stat:
+    path: "{{ lookup('env','HOME') }}/.dropbox-dist"
+  register: dropbox_f_r
+
+
+- name: Download dropbox to ~/tmp and extracts
+  when: not dropbox_f_r.stat.exists
+  register: dropbox_a_r
+  ansible.builtin.unarchive:
+    src:   https://www.dropbox.com/download?plat=lnx.x86_64
+    dest: "{{ lookup('env','HOME') }}/tmp"  
+    remote_src: yes
+
+- name: Move downloaded dropbox dist to home
+  command: mv "{{ lookup('env','HOME') }}/tmp/.dropbox-dist/" "{{ lookup('env','HOME') }}/.dropbox-dist/"
+  when: dropbox_a_r.changed
+
+- name: Create ~/.config/autostart folder
+  file:
+    path: "{{ lookup('env','HOME') }}/.config/autostart"
+    state: directory
+
+- name: Write dropbox.desktop
+  template:
+      src: h.config.autostart.dropbox.j2
+      dest: "{{ lookup('env','HOME') }}/.config/autostart/dropbox.desktop"
+      mode: u+rwx

@@ -1,0 +1,11 @@
+- name: Install a list of packages
+  apt:
+    pkg:
+    - docker 
+    - docker-compose
+
+- name: Adding user {{ lookup('env', 'USER') }} to groups
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: docker
+    append: yes   

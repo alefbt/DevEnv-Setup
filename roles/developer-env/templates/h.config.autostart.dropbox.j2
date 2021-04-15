@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=dropbox
+GenericName=Dropbox deamon
+Comment=Sync my files dropbox way to cloud
+Icon=utilities-terminal
+Exec={{ lookup('env','HOME') }}/.dropbox-dist/dropboxd > /var/log/users/{{ lookup('env','USER') }}/dropbox.log 2>&1
+Categories=ConsoleOnly;System
+Terminal=false
+X-GNOME-Autostart-enabled=true

@@ -14,16 +14,25 @@
     - aptitude
     - snapd
     - apt-transport-https
-    - docker 
-    - docker-compose
 
-- name: Include ZSH tasks
+- name: Workspace tasks
+  import_tasks: workspace.yml
+
+- name: Docker tasks
+  import_tasks: docker.yml
+
+- name: ZSH tasks
   import_tasks: zsh.yml
   become: yes
   become_user: "{{ lookup('env','USER') }}"
 
 - name: Zoom tasks
   import_tasks: zoom.yml
+
+- name: Dropbox tasks
+  import_tasks: dropbox.yml
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
 
 - name: Install via snap
   snap:
