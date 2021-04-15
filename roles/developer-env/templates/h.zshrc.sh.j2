@@ -6,6 +6,12 @@ fi
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH:/snap/bin
 
+if [ -d "{{ lookup('env','HOME') }}/.local/bin" ] ; then
+    export PATH={{ lookup('env','HOME') }}/.local/bin:$PATH
+fi
+
+export PATH="$(yarn global bin):$PATH"
+
 # Path to your oh-my-zsh installation.
 export ZSH="{{ lookup('env','HOME') }}/.oh-my-zsh"
 

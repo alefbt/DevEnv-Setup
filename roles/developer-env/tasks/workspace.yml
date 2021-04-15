@@ -14,7 +14,8 @@
     mode: u+rwx
     state: directory    
   loop:
-    - Projects
+    - Projects/moonshoots
+    - Projects/tmp
     - tmp
     - Applications/Archive
     - Data

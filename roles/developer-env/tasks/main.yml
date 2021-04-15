@@ -1,8 +1,6 @@
 - name: Install a list of packages
   apt:
     pkg:
-    - neovim 
-    - neovim-qt
     - fzf
     - python3
     - python3-setuptools
@@ -14,6 +12,36 @@
     - aptitude
     - snapd
     - apt-transport-https
+    - nodejs 
+    - npm
+    - libx11-dev
+    - libxext-dev
+    - gimp
+    - inkscape
+    - vlc
+    - kolourpaint
+    - meld
+    - planner
+    - freeplane
+    - git-flow
+    - obs-studio 
+    - obs-plugins 
+    - obs-build
+    - htop
+
+- npm:
+    name: yarn
+    global: yes
+
+
+- npm:
+    name: neovim
+    global: yes
+
+- pip:
+    name: 
+    - ueberzug
+    - pynvim
 
 - name: Workspace tasks
   import_tasks: workspace.yml
@@ -26,6 +54,11 @@
   become: yes
   become_user: "{{ lookup('env','USER') }}"
 
+- name: NVim
+  import_tasks: nvim.yml
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
+
 - name: Zoom tasks
   import_tasks: zoom.yml
 
@@ -34,25 +67,16 @@
   become: yes
   become_user: "{{ lookup('env','USER') }}"
 
-- name: Install via snap
+- name: Install via snap (Classic)
   snap:
     name: 
       - code
     classic: yes
 
-# zsh theme
-#    sudo usermod -a -G microk8s yehuda
-#    sudo chown -f -R yehuda ~/.kube
-#       sudo vi /etc/locale.gen
-#       https://wiki.debian.org/Locale
-#       locale-gen 
-# veracrypt
+- name: Install via snap
+  snap:
+    name: 
+      - drawio
 
 #should have
 # ansible-playbook  --ask-become-pass site.yml
-#
-#
-# Todo:
-# nix
-# sudo usermod -aG docker yehuda
-
