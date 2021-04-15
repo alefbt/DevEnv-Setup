@@ -12,3 +12,15 @@
     - vlc
     - gnome-themes-standard
 
+# for problem solving
+# dpkg-reconfigure locales
+- name: locale gen
+  ansible.builtin.lineinfile:
+    path: /etc/locale.gen
+    regexp: '^\s*#\ en_US\.UTF-8'
+    line: en_US.UTF-8 UTF-8
+  register: locale_f_r
+
+- name: locale gen run
+  command: locale-gen
+  when: locale_f_r.changed

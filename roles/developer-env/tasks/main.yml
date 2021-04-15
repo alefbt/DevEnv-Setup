@@ -40,28 +40,6 @@
       - code
     classic: yes
 
-#- name: Adding user {{ lookup('env', 'USER') }} to groups
-#  user:
-#    name: "{{ lookup('env', 'USER') }}"
-#    shell: /bin/zsh
-#    groups: microk8s
-#    append: yes   
-    
-- name: HELM - Add an Apt signing key for
-  ansible.builtin.apt_key:
-    url: https://baltocdn.com/helm/signing.asc
-    state: present
-    
-- name: HELM - Add specified repository into sources list
-  ansible.builtin.apt_repository:
-    repo: deb https://baltocdn.com/helm/stable/debian/ all main
-    state: present    
-    
-- name: HELM - Update repositories cache and install "helm" package
-  apt:
-    name: helm
-    update_cache: yes
-
 # zsh theme
 #    sudo usermod -a -G microk8s yehuda
 #    sudo chown -f -R yehuda ~/.kube
