@@ -1,4 +1,7 @@
-source {{ lookup('env','HOME') }}/.nix-profile/etc/profile.d/nix.sh
+
+if [ -d "{{ lookup('env','HOME') }}/.nix-profile" ] ; then
+    source {{ lookup('env','HOME') }}/.nix-profile/etc/profile.d/nix.sh
+fi
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH:/snap/bin

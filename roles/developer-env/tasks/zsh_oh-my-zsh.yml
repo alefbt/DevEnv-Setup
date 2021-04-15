@@ -1,6 +1,7 @@
 - name: Create ~/tmp folder
   file:
     path: "{{ lookup('env','HOME') }}/tmp"
+    state: directory
 
 - name: check 
   stat:

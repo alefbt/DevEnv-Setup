@@ -5,6 +5,13 @@
     - zsh-autosuggestions
     - zsh-syntax-highlighting
 
+- name: Changing shell to zsh of user '{{ lookup('env', 'USER') }}' 
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    shell: /usr/bin/zsh
+  become: true
+  become_user: root
+
 - name: Include oh-my-zsh
   include_tasks: zsh_oh-my-zsh.yml
 
@@ -12,3 +19,33 @@
   template:
       src: h.zshrc.sh.j2
       dest: "{{ lookup('env','HOME') }}/.zshrc"
+
+#
+#  FONTS
+#
+- name: "Creates {{ lookup('env','HOME') }}/.local/share/fonts/"
+  file:
+    path: "{{ lookup('env','HOME') }}/.local/share/fonts/"
+    state: directory
+
+- name: Download PowerlineSymbols fonts
+  get_url:
+    url:   https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+    dest: "{{ lookup('env','HOME') }}/.local/share/fonts/"
+  register: zsh_font_dw_r
+
+
+- name: update fc cache
+  command: fc-cache -vf ~/.local/share/fonts/
+  when: zsh_font_dw_r.changed
+
+
+- name: "Creates {{ lookup('env','HOME') }}/.config/fontconfig/conf.d/"
+  file:
+    path: "{{ lookup('env','HOME') }}/.config/fontconfig/conf.d/"
+    state: directory
+
+- name: Download oh-my-zsh
+  get_url:
+    url:   https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+    dest: "{{ lookup('env','HOME') }}/.config/fontconfig/conf.d/"

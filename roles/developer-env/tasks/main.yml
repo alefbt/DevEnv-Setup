@@ -51,8 +51,6 @@
     update_cache: yes
 
 # zsh theme
-# git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
-
 #    sudo usermod -a -G microk8s yehuda
 #    sudo chown -f -R yehuda ~/.kube
 #       sudo vi /etc/locale.gen
