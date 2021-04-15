@@ -2,11 +2,13 @@
   apt:
     pkg:
     - fzf
+    - python2.7
     - python3
     - python3-setuptools
     - python3-pip
     - libpango1.0-0
     - libpangox-1.0-0
+    - virtualenv
     - python3-gpg
     - httpie
     - aptitude
