@@ -1,0 +1,7 @@
+- name: Install a list of packages
+  apt:
+    pkg:
+    - xmonad
+    - libghc6-xmonad-contrib-dev
+    - libghc6-xmonad-dev
+ 

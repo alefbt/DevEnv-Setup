@@ -4,6 +4,9 @@
     - zsh
     - zsh-autosuggestions
     - zsh-syntax-highlighting
+  become: true
+  become_user: root
+
 
 - name: Changing shell to zsh of user '{{ lookup('env', 'USER') }}' 
   user:
