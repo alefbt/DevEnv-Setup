@@ -10,4 +10,6 @@
     - cabal-install
     - scrot
     - picom
+    - nm-applet
+    #    - gnome-power-manager
  
