@@ -1,4 +1,11 @@
 
+This is enviorment script for Debian 11
+
+its creates enviorment
+
+ * XNomad
+
+
 To getting started
 
 ```bash

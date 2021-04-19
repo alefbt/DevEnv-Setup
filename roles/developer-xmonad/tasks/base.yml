@@ -10,6 +10,39 @@
     - cabal-install
     - scrot
     - picom
-    - nm-applet
-    #    - gnome-power-manager
+  become: yes
+  become_user: "root"
+
+- name:  .stalonetrayrc
+  template:
+    src: h.stalonetrayrc
+    dest: "{{ lookup('env','HOME') }}/.stalonetrayrc"
+
+- name:  .xmobarrc
+  template:
+    src: h.xmobarrc
+    dest: "{{ lookup('env','HOME') }}/.xmobarrc"
+
+- name:  .xsessionrc
+  template:
+    src: h.xsessionrc
+    dest: "{{ lookup('env','HOME') }}/.xsessionrc"
+
+- name: create xmonad dir
+  file:
+    path: "{{ lookup('env','HOME') }}/.xmonad"
+    state: directory    
+ 
+- name: ~/.xmonad/xmonad.hs 
+  template:
+    src: h.xsessionrc
+    dest: "{{ lookup('env','HOME') }}/.xmonad/xmonad.hs"
+
+
+
+
+
+
+
+
  

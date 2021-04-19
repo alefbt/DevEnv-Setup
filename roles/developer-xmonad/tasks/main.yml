@@ -1,3 +1,7 @@
 - name: Install xmonad-base
   import_tasks: base.yml
+  become: yes
+  become_user: "{{ lookup('env','USER') }}"
+
+
 
