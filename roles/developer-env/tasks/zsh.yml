@@ -4,6 +4,7 @@
     - zsh
     - zsh-autosuggestions
     - zsh-syntax-highlighting
+    - ranger
   become: true
   become_user: root
 
@@ -22,7 +23,18 @@
   template:
       src: h.zshrc.sh.j2
       dest: "{{ lookup('env','HOME') }}/.zshrc"
+# 
+#  Configure the ranger
+#
+- name: "Creates {{ lookup('env','HOME') }}/.config/ranger/"
+  file:
+    path: "{{ lookup('env','HOME') }}/.config/ranger"
+    state: directory
 
+- name: Write ranger rc.conf 
+  template:
+      src: h.config.ranger.rc.conf.j2
+      dest: "{{ lookup('env','HOME') }}/.config/ranger/rc.conf"
 #
 #  FONTS
 #

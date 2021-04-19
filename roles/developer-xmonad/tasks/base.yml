@@ -2,13 +2,12 @@
   apt:
     pkg:
     - xmonad
-    - libghc6-xmonad-contrib-dev
-    - libghc6-xmonad-dev
+    - libghc-xmonad-contrib-dev
+    - libghc-xmonad-dev
     - stalonetray
     - xmobar
     - suckless-tools
     - cabal-install
     - scrot
-    - consolekit
     - picom
  
