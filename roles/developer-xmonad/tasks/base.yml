@@ -4,4 +4,11 @@
     - xmonad
     - libghc6-xmonad-contrib-dev
     - libghc6-xmonad-dev
+    - stalonetray
+    - xmobar
+    - suckless-tools
+    - cabal-install
+    - scrot
+    - consolekit
+    - picom
  
