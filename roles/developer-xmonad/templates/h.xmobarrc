@@ -1,6 +1,7 @@
 Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
         , borderColor = "black"
         , border = TopB
+        , overrideRedirect = False 
         , bgColor = "black"
         , fgColor = "grey"
         , position = TopW L 100
