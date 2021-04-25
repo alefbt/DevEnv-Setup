@@ -30,6 +30,10 @@
     - obs-plugins 
     - obs-build
     - htop
+    - rclone 
+    - rclone-browser 
+    - fonts-crosextra-carlito 
+    - fonts-crosextra-caladea
 
 - npm:
     name: yarn

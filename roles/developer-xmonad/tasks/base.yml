@@ -13,6 +13,8 @@
     - rofi
     - feh
     - xfce4-power-manager
+    - xscreensaver
+    - xscreensaver-gl
   become: yes
   become_user: "root"
 

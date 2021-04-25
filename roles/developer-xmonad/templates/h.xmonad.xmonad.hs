@@ -12,7 +12,7 @@ import           System.IO
 import           System.Environment -- get Environment Variables
 
 -- WorkSpaces Switch
-import XMonad.Actions.CycleWS			-- nextWS, prevWS
+import XMonad.Actions.CycleWS -- nextWS, prevWS
 -- import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -22,7 +22,7 @@ import XMonad.Layout.IndependentScreens (countScreens)
 import Control.Monad (Monad (..), unless, when, liftM)
 import XMonad.Actions.WorkspaceNames
 import XMonad.Layout.NoBorders
-
+import XMonad.Hooks.ManageHelpers
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -57,6 +57,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     -- launch rofi
     , ((modm,               xK_p     ), spawn "rofi -show drun")
+    , ((0,                  xK_Print ), spawn "scrot  -z -f -s -m '%y%m%d-%H%M%S.png' -e 'xclip -selection clipboard -target image/png -i $f && mv $f ~/Pictures/screenshots'")
 
     -- launch gmrun
     -- , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -66,7 +67,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
      -- Rotate through the available layout algorithms
      -- , ((modm,               xK_space ), sendMessage NextLayout)
-    , ((modm,               xK_space), spawn "~/.xmonad/scripts/change-lang-ibus.sh >> ~/log.xmonad.ibus.sh.log 2>&1")
+     -- , ((modm,               xK_space), spawn "~/.xmonad/scripts/change-lang-ibus.sh >> ~/.xmonad/scripts/change-lang-ibus.sh.log 2>&1")
 
  
     --  Reset the layouts on the current workspace to default
@@ -108,7 +109,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Expand the master area
     -- , ((modm,               xK_l     ), sendMessage Expand)
-    , ((modm,               xK_l     ), spawn "ibus engine xkb:us::eng && xflock4")
+    , ((modm,               xK_l     ), spawn "setxkbmap -layout us && xscreensaver-command -lock")
 
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
@@ -225,6 +226,11 @@ myManageHook = manageDocks <+> composeAll
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore]
+     <+> composeOne [ transience
+                      , isDialog -?> doCenterFloat                      
+                      , resource =? "stalonetray" -?> doIgnore
+                      , isFullscreen -?> doFullFloat
+                    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -299,7 +305,7 @@ wsPP = xmobarPP { ppOrder               = \(ws:l:t:_)   -> [ws]
 --
 myStartupHook = do
     spawn "xrdb -mereg $HOME/.Xresources"
-    spawn "~/.xmonad/scripts/startup.sh" 
+    spawn "~/.xmonad/scripts/startup.sh >> ~/.xmonad/scripts/startup.log 2>&1" 
     return ()
 {--
     -- liftM (dd==(2::Int)) countScreens >>= flip when (spawn "xrandr --output HDMI-2 --right-of DP-1 --auto")

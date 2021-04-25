@@ -12,14 +12,13 @@ set expandtab
 set autoindent
 set fileformat=unix
 
-let g:python_host_prog  = '/home/yehuda/Data/python/v2.7/venv-global/bin/python'
+let g:python_host_prog  = '{{ lookup('env','HOME') }}/Data/python/v2.7/venv-global/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
 
 let mapleader = ' '
 call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
-Plug 'nanotech/jellybeans.vim'
 Plug 'preservim/nerdtree'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'vim-airline/vim-airline'
@@ -34,9 +33,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pearofducks/ansible-vim'
 call plug#end()
 
-" colorscheme gruvbox
-colorscheme jellybeans
-
+colorscheme gruvbox
 let g:airline_them='gruvbox'
 
 if (has("termguicolors"))
