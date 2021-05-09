@@ -129,3 +129,68 @@ autoload -Uz compinit
 compinit
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
+
+
+# 
+# Aliases Taken from LinkedIn - http://lnkd.in/dsBrU9F
+# You may contribute more 
+
+# ######### FUNCTIONS ###############################
+
+# Thanks to Eric Ross
+pss() { echo; ps auxwww | egrep "$@|^USER" | grep -v grep;}
+
+# Thanks to Denis Kovalev
+cls() { printf "\33[2J";}
+
+# Thanks to Tomasz Klapinski & Carl Reynolds
+mkcd() { /bin/mkdir $* && /usr/bin/cd "${@: -1}" ; }
+rmk() { [ $# -eq 1 ] && sed -i $1d /home/[username]/.ssh/known_hosts ; } 
+
+# Thanks to David A. Desrosiers
+function duf { 
+du -sk "$@" | sort -n | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done 
+} 
+# ########## ALIASES ################################
+# Thanks to Dave Smith
+alias cls='clear' #kinda obvious, but I'm mistyping it regularly
+alias df='df -h' 
+alias ls='ls --color=tty' # nicer outputs
+
+alias msg='tail -20 /var/log/messages' 
+alias msgf='tail -f /var/log/messages' 
+alias mlog='tail -20 /var/log/maillog' 
+alias mlogf='tail -f /var/log/maillog' 
+alias rd='rmdir' 
+alias gorc='cd /etc/init.d' 
+alias golog='cd /var/log' 
+alias ver='cat /proc/version && cat /etc/system-release' 
+alias exe='chmod u+x' 
+alias cd..='cd ..' 
+alias dir='ls -aFl --color' 
+alias dr='ls -aF --color' 
+alias dird='ls -aFld --color' # Show only directories 
+alias mdstat='cat /proc/mdstat' 
+
+# Thanks to Michael Eager
+alias pd="pushd" 
+alias po="popd" 
+alias ..="cd ..;ls" 
+alias dirs="dirs -v" 
+alias h="cd \$PWD" 
+
+# Thanks to Miguel E Arellano Quezada
+alias ll='ls -l --color' 
+alias la='ls -la --color' 
+alias rm='rm -i' 
+alias cp='cp -i' 
+alias mv='mv -i' 
+
+# Thanks to Tomasz Klapinski
+alias hog="du -hs * | sort -n | egrep '(^[[:digit:]]{1,}.?[[:digit:]]?G)|(^[[:digit:]]{3,}M)'"
+
+# Thanks to Jonathan Roberts
+alias hist="history | grep $1"
+alias cdc='cd; clear' #cd to home dir and clear screen
+alias '..'='cd..' 
+alias v='vim'
