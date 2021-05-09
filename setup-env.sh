@@ -18,6 +18,8 @@ STATUS_ERROR="$C_FALSE"
 
 TMP_APT_SOURCE_LIST="/tmp/new-source-list.$timestamp"
 TMP_ENV_PATH="$HOME/tmp/_create-env.$timestamp"
+D_GIT_CLONE_PATH="$C_USER_HOME/Projects/alefbt/DevEnv-Setup"
+
 
 
 #
@@ -218,13 +220,24 @@ cd "$TMP_ENV_PATH"
 #fi
 
 
+P_PATH=$(dirname "$D_GIT_CLONE_PATH")
 
-git clone --branch "$GIT_BRANCH" "$GIT_FROM_URL" "from-git"
-cd "$TMP_ENV_PATH/from-git"
+if [ ! -d "$P_PATH" ] ; then
+	mkdir -p "$P_PATH"
+fi
+
+if [ ! -d "$D_GIT_CLONE_PATH" ] ; then
+	git clone --branch "$GIT_BRANCH" "$GIT_FROM_URL" "$D_GIT_CLONE_PATH"
+fi
+
+cd "$D_GIT_CLONE_PATH"
+git pull
 
 # RUN ANSIBLE
 log "Might ask $C_USERNAME password"
 ansible-playbook  --ask-become-pass site.yml
+
+./config-files/update-config-files.sh
 
 #
 #

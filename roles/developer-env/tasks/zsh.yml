@@ -18,26 +18,13 @@
 
 - name: Include oh-my-zsh
   include_tasks: zsh_oh-my-zsh.yml
-
-- name: Write .zshrc
-  template:
-      src: h.zshrc.sh.j2
-      dest: "{{ lookup('env','HOME') }}/.zshrc"
-# 
-#  Configure the ranger
-#
-- name: "Creates {{ lookup('env','HOME') }}/.config/ranger/"
-  file:
-    path: "{{ lookup('env','HOME') }}/.config/ranger"
-    state: directory
-
-- name: Write ranger rc.conf 
-  template:
-      src: h.config.ranger.rc.conf.j2
-      dest: "{{ lookup('env','HOME') }}/.config/ranger/rc.conf"
-#
-#  FONTS
-#
+  # ------------------------------
+  # Config files moved to .../config-files/home/.zshrc
+  # ------------------------------
+  
+  #
+  #  FONTS
+  #
 - name: "Creates {{ lookup('env','HOME') }}/.local/share/fonts/"
   file:
     path: "{{ lookup('env','HOME') }}/.local/share/fonts/"

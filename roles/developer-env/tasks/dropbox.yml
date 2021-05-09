@@ -28,6 +28,6 @@
 
 - name: Write dropbox.desktop
   template:
-      src: h.config.autostart.dropbox.j2
+    src: h.config.autostart.dropbox.desktop.j2
       dest: "{{ lookup('env','HOME') }}/.config/autostart/dropbox.desktop"
       mode: u+rwx

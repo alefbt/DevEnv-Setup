@@ -23,37 +23,6 @@
     name:
       - udiskie
 
-- name:  .stalonetrayrc
-  template:
-    src: h.stalonetrayrc
-    dest: "{{ lookup('env','HOME') }}/.stalonetrayrc"
-
-- name:  .xmobarrc
-  template:
-    src: h.xmobarrc
-    dest: "{{ lookup('env','HOME') }}/.xmobarrc"
-
-    # - name:  .xsessionrc
-    #   template:
-    #     src: h.xsessionrc
-    #     dest: "{{ lookup('env','HOME') }}/.xsessionrc"
-    # 
-
-- name: create xmonad dir
-  file:
-    path: "{{ lookup('env','HOME') }}/.xmonad/scripts"
-    state: directory    
- 
-- name: ~/.xmonad/xmonad.hs 
-  template:
-    src: h.xmonad.xmonad.hs
-    dest: "{{ lookup('env','HOME') }}/.xmonad/xmonad.hs"
-
-- name: ~/.xmonad/scripts/random-bg.sh
-  template:
-    src: h.xmonad.scripts.random-bg.sh
-    dest: "{{ lookup('env','HOME') }}/.xmonad/scripts/random-bg.sh"
-
 
 
 
