@@ -4,6 +4,7 @@ import System.Exit
 import XMonad.Layout.Spacing
 import XMonad.Layout.Minimize
 import XMonad.Layout.Maximize
+import Data.Ratio ((%))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -23,6 +24,7 @@ import Control.Monad (Monad (..), unless, when, liftM)
 import XMonad.Actions.WorkspaceNames
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.ManageHelpers
+import XMonad.Actions.PhysicalScreens
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -57,13 +59,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     -- launch rofi
     , ((modm,               xK_p     ), spawn "rofi -show drun")
-    , ((0,                  xK_Print ), spawn "scrot  -z -f -s -m '%y%m%d-%H%M%S.png' -e 'xclip -selection clipboard -target image/png -i $f && mv $f ~/Pictures/screenshots'")
+    , ((0 .|. shiftMask,                  xK_Print ), spawn "scrot  -z -f -s -m '%y%m%d-%H%M%S.png' -e 'xclip -selection clipboard -target image/png -i $f && mv $f ~/Pictures/screenshots'")
 
     -- launch gmrun
     -- , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm,     xK_F4     ), spawn "~/.xmonad/scripts/shutdown.sh")
+    , ((mod1Mask, xK_F4     ), kill)
+
 
      -- Rotate through the available layout algorithms
      -- , ((modm,               xK_space ), sendMessage NextLayout)
@@ -88,15 +93,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
+    , ((modm,               xK_F12   ), spawn "xdaliclock -24 -seconds -nocycle -bg gray -fg yellow -memory low -datemode DDMMYY -showtime")
+    , ((modm,               xK_F11    ), spawn "kitty --name rangerfm ranger")
+
     , ((modm,               xK_Right ), nextWS)
     , ((modm,               xK_Left ),  prevWS)
     , ((modm .|. shiftMask, xK_Right),  shiftToNext)
     , ((modm .|. shiftMask, xK_Left),   shiftToPrev)    
+    , ((modm,               xK_s), nextScreen)
 
 
     -- Swap the focused window and the master window
-    -- , ((modm,               xK_Return), windows W.swapMaster)
-    , ((modm,               xK_Return), sendMessage NextLayout)
+    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm .|. shiftMask, xK_Tab), sendMessage NextLayout)
 
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -224,6 +233,9 @@ myLayout = avoidStruts $ smartBorders $ (tiled ||| Mirror tiled ||| layoutFull)
 myManageHook = manageDocks <+> composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "XDaliClock"     --> doCenterFloat
+    , appName =? "rangerfm"         --> doRectFloat(W.RationalRect 0.20 0.20 0.6 0.6)
+    , className =? "KeePassXC"      --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore]
      <+> composeOne [ transience
@@ -304,20 +316,8 @@ wsPP = xmobarPP { ppOrder               = \(ws:l:t:_)   -> [ws]
 -- hook by combining it with ewmhDesktopsStartup.
 --
 myStartupHook = do
-    spawn "xrdb -mereg $HOME/.Xresources"
     spawn "~/.xmonad/scripts/startup.sh >> ~/.xmonad/scripts/startup.log 2>&1" 
     return ()
-{--
-    -- liftM (dd==(2::Int)) countScreens >>= flip when (spawn "xrandr --output HDMI-2 --right-of DP-1 --auto")
-    spawn "xrdb -merge .Xresources"
-	spawnOnce "$HOME/.xmonad/scripts/random-bg.sh $HOME/Pictures/bg"
-	spawnOnce "stalonetray"
-    -- spawnOnce "xfce4-power-manager"
-	return ()
---} 
---
---
---
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset

@@ -2,6 +2,7 @@
   apt:
     pkg:
     - fzf
+    - fd-find
     - python2.7
     - python3
     - python3-setuptools

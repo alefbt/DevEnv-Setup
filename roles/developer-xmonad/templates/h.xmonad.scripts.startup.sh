@@ -1,5 +1,7 @@
 #!/bin/sh
 
+xrdb -merge $HOME/.Xresources &
+
 kill_if_runing () {
     tPID=$(pidof $1)
 
