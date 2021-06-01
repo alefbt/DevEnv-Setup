@@ -93,7 +93,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
-    , ((modm,               xK_F12   ), spawn "xdaliclock -24 -seconds -nocycle -bg gray -fg yellow -memory low -datemode DDMMYY -showtime")
+    , ((modm,               xK_F12   ), spawn "xdaliclock -24 -seconds -nocycle -bg black -bd yellow -fg green -memory low -datemode DDMMYY -showtime")
     , ((modm,               xK_F11    ), spawn "kitty --name rangerfm ranger")
 
     , ((modm,               xK_Right ), nextWS)
@@ -235,6 +235,7 @@ myManageHook = manageDocks <+> composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "XDaliClock"     --> doCenterFloat
     , appName =? "rangerfm"         --> doRectFloat(W.RationalRect 0.20 0.20 0.6 0.6)
+    , (className =? "Drawio" <&&> title =? "Confirm") --> doCenterFloat
     , className =? "KeePassXC"      --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore]

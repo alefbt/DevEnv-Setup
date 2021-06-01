@@ -35,6 +35,7 @@
     - rclone-browser 
     - fonts-crosextra-carlito 
     - fonts-crosextra-caladea
+    - xinput
 
 - npm:
     name: yarn

@@ -15,6 +15,7 @@
     - xfce4-power-manager
     - xscreensaver
     - xscreensaver-gl
+    - xinput
   become: yes
   become_user: "root"
 
